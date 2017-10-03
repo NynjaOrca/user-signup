@@ -13,6 +13,12 @@ def submit_information():
     ver_pass = request.form['verify']
     email = request.form['email']
 
+# ERROR DECLARATION
+    uError = ''
+    pError = ''
+    vError = ''
+    eError = ''
+
 # CHARACTER LISTS
     whitespace = ' '
     digits = ['0','1','2','3','4','5','6','7','8','9']
@@ -22,17 +28,17 @@ def submit_information():
 
 
 # CHECK USERNAME REQUIREMENTS
-    if (not username):
+    if not username:
         uError = "Please enter a username."
-        return redirect('/?uError=' + uError)
+        # return redirect('/?uError=' + uError)
 
-    elif ((len(username) < 3) or (len(username) > 20)):
+    if ((len(username) < 3) or (len(username) > 20)):
         uError = "Username must between 3 - 20 characters."
-        return redirect('/?uError=' + uError)
+        # return redirect('/?uError=' + uError)
 
-    elif ' ' in str(username):
+    if ' ' in str(username):
         uError = "Username must not contain white space." 
-        return redirect('/?uError=' + uError)
+        # return redirect('/?uError=' + uError)
 
 
 # CHECK PASSWORD REQUIREMENTS
@@ -50,35 +56,37 @@ def submit_information():
             specChar += 1
         elif char in uppercase:
             upprChar += 1
+        else:
+            continue
 
     if not password:
         pError = "Please enter a password."
-        return redirect('/?pError=' + pError)
+        # return redirect('/?pError=' + pError)
 
-    elif ((len(password) < 3) or (len(password) > 20)):
+    if ((len(password) < 3) or (len(password) > 20)):
         pError = "Password must between 3 - 20 characters."
-        return redirect('/?pError=' + pError)
+        # return redirect('/?pError=' + pError)
 
-    elif digiChar < 1:
+    if digiChar < 1:
         pError = "Password must contain at least 1 digit."
-        return redirect('/?pError=' + pError)
+        # return redirect('/?pError=' + pError)
 
-    elif specChar < 1:
+    if specChar < 1:
         pError = "Password must contain at least 1 special character."
-        return redirect('/?pError=' + pError)
+        # return redirect('/?pError=' + pError)
 
-    elif whitChar != 0:
+    if whitChar != 0:
         pError = "Password must not contain white space."
-        return redirect('/?pError=' + pError)        
+        # return redirect('/?pError=' + pError)        
 
-    elif upprChar < 1:
+    if upprChar < 1:
         pError = "Password must contain at least 1 uppercase character."
-        return redirect('/?pError=' + pError)
+        # return redirect('/?pError=' + pError)
 
 # VERIFY THAT THE PASSWORDS MATCH
     if ver_pass != password:
         vError = "Your passwords do not match."
-        return redirect('/?vError=' + vError)
+        # return redirect('/?vError=' + vError)
     
 
 # CHECK EMAIL REQUIREMENTS
@@ -99,14 +107,18 @@ def submit_information():
 
     if atCount != 1:
         eError = "Invalid Email address."
-        return redirect('/?eError=' + eError) 
-    elif pdCount != 1:
+        # return redirect('/?eError=' + eError) 
+    if pdCount != 1:
         eError = "Invalid Email address."
-        return redirect('/?eError=' + eError)
-    elif wsCount > 0:
+        # return redirect('/?eError=' + eError)
+    if wsCount > 0:
         eError = "Invalid Email address."
-        return redirect('/?eError=' + eError) 
+        # return redirect('/?eError=' + eError)
 
+
+
+    if eError or pError or uError or vError:
+        return render_template('signup-form.html', username=username, uError=uError, pError=pError, vError=vError, email=email, eError=eError)
     else:
         return render_template('welcome.html', username=username)
 

@@ -16,7 +16,7 @@
             <tr>
                 <td><label for="username"><strong>USERNAME:</strong></label></td>
                 <td>
-                    <input name="username" type="text" value="">
+                    <input name="username" type="text" value="{{username}}">
                 </td>
                 {% if uError %}
                 <td class="error">{{ uError }}</td>
@@ -43,7 +43,7 @@
             <tr>
                 <td><label for="email"><strong>EMAIL(optional)</strong></label></td>
                 <td>
-                    <input name="email" value="">
+                    <input name="email" value="{{email}}">
                 </td>
                 {% if eError %}
                 <td class="error">{{ eError }}</td>
