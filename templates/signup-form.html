@@ -1,0 +1,55 @@
+{% extends "base.html" %}
+
+{% block content %}
+<form action="/signup" method="post">
+    <div style="color:teal">
+    <h4>Field Requirements</h4>
+        <h5>Username must be between 3 and 20 characters long.</h5>
+        <h5>Username must not contain whitespace.</h5>
+        <h5>Password must be between 3 and 20 characters long.</h5>
+        <h5>Password must contain at least 1 of each: digit, special character, upper character.</h5>
+        <h5>Password must not contain whitespace.</h5>
+        <h5>Email must be a valid Email address.</h5>
+    </div>
+    </br>   
+        <table>
+            <tr>
+                <td><label for="username"><strong>USERNAME:</strong></label></td>
+                <td>
+                    <input name="username" type="text" value="">
+                </td>
+                {% if uError %}
+                <td class="error">{{ uError }}</td>
+                {% endif %}
+            </tr>
+            <tr>
+                <td><label for="password"><strong>PASSWORD</strong></label></td>
+                <td>
+                    <input name="password" type="password">
+                </td>
+                {% if pError %}
+                <td class="error">{{ pError }}</td>
+                {% endif %}
+            </tr>
+            <tr>
+                <td><label for="verify"><strong>PASSWORD VERIFICATION:</strong></label></td>
+                <td>
+                    <input name="verify" type="password">
+                </td>
+                {% if vError %}
+                <td class="error">{{ vError }}</td>
+                {% endif %}
+            </tr>
+            <tr>
+                <td><label for="email"><strong>EMAIL(optional)</strong></label></td>
+                <td>
+                    <input name="email" value="">
+                </td>
+                {% if eError %}
+                <td class="error">{{ eError }}</td>
+                {% endif %}
+            </tr>
+        </table>
+    <input type="submit">
+</form>
+{% endblock %}
